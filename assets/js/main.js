@@ -14,10 +14,17 @@
 		mobile: '(max-width: 736px)'
 	});
 
-	$(function() {
+
 
 		var	$window = $(window),
 			$body = $('body');
+
+		// Disable animations/transitions until the page has loaded.
+			$body.addClass('is-loading');
+
+			$window.on('load', function() {
+				$body.removeClass('is-loading');
+			});
 
 		// CSS polyfills (IE<9).
 			if (skel.vars.IEVersion < 9)
@@ -26,6 +33,13 @@
 		// Fix: Placeholder polyfill.
 			$('form').placeholder();
 
+		// Prioritize "important" elements on mobile.
+			skel.on('+mobile -mobile', function() {
+				$.prioritize(
+					'.important\\28 mobile\\29',
+					skel.breakpoint('mobile').active
+				);
+			});
 
 		// Scrolly links.
 			$('.scrolly').scrolly();
@@ -45,6 +59,14 @@
 							return;
 
 						e.preventDefault();
+
+						// Clear active and lock scrollzer until scrolling has stopped
+							$nav_a
+								.removeClass('active')
+								.addClass('scrollzer-locked');
+
+						// Set this link to active
+							t.addClass('active');
 
 					});
 
