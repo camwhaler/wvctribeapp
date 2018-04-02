@@ -60,14 +60,6 @@
 
 						e.preventDefault();
 
-						// Clear active and lock scrollzer until scrolling has stopped
-							$nav_a
-								.removeClass('active')
-								.addClass('scrollzer-locked');
-
-						// Set this link to active
-							t.addClass('active');
-
 					});
 
 			// Initialize scrollzer.
